@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './App.scss';
+import MessageTemplateEditor from './components/MessageTemplateEditor/MessageTemplateEditor';
+import StartScreen from './components/StartScreen/StartScreen';
 
 function App() {
+
+  const arrVarNames: string[] = ["firstname", "lastname", "company", "position"]
+  const template: string = "buba"
+
+  const [showEditor, setShowEditor] = useState(false)
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  // <MessageTemplateEditor template={template} arrVarNames={arrVarNames} />
+  !showEditor ? <StartScreen setShowEditor={setShowEditor} /> : <MessageTemplateEditor template={template} arrVarNames={arrVarNames} setShowEditor={setShowEditor} callbackSave={callbackSave} />
+    // <StartScreen template={template} arrVarNames={arrVarNames} />
   );
 }
+
+export const callbackSave = async (t: any) => {
+  localStorage.setItem('template', JSON.stringify(t));
+  console.log('Data saved to localStorage');
+};
 
 export default App;

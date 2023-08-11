@@ -1,0 +1,56 @@
+.PreviewScreen {
+    pointer-events: auto;
+    width: 600px;
+    min-height: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 13px;
+    display: grid;
+    grid-template-rows: max-content;
+    grid-gap: 0;
+    background-color: #fff;
+    box-shadow: 0 0 15px black;
+    button {
+        width: fit-content;
+        height: fit-content;
+        color: #fff;
+        background-color: #303040;
+        padding: .5rem 1.5rem;
+        align-self: end;
+        margin:  0 1.5rem 1.5rem 1.5rem;
+        justify-self: center;
+    }
+    .message_preview {
+        width: calc(100% - 3rem);
+        box-sizing: border-box;
+        margin: 1.5rem;
+        justify-self: center;
+        outline: none;
+    }
+    .var_container {
+        height: fit-content;
+        display: flex;
+        flex-wrap: wrap;
+        div {
+            display: block;
+            box-sizing: border-box;
+            width: calc(50% - 3rem);
+            margin: 0 1.5rem 1.5rem 1.5rem;
+        }
+        .var {
+            box-sizing: border-box;
+            width: 100%;
+            margin-bottom: 0;
+        }
+        label {
+            left: .5rem;
+            top: .5rem;
+            padding: 0px 5px;
+            background-color: #fff;
+            color: black;
+            position: relative;
+        }
+}
+}
