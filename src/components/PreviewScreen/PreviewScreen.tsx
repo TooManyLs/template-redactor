@@ -16,8 +16,8 @@ const PreviewScreen: FC<PreviewScreenProps> = ({setShowPreview, arrVarNames, ele
         {array.map(el => {
           return (
             <div key={el + "key"}>
-              <label>{el}</label>
-              <TextareaAutosize placeholder={el} className={styles.var} onChange={event => handleInputChange(event, el)}/>
+              <label htmlFor={el}>{el}</label>
+              <TextareaAutosize id={el} placeholder={el} className={styles.var} onChange={event => handleInputChange(event, el)}/>
             </div>
           )
         })}
@@ -32,7 +32,7 @@ const PreviewScreen: FC<PreviewScreenProps> = ({setShowPreview, arrVarNames, ele
 
   useEffect(() => {
     const initialValues: Values = {};
-    arrVarNames.forEach((name: any) => {
+    arrVarNames.forEach((name: string) => {
       initialValues[name] = "";
     });
     setValues(initialValues);
@@ -54,7 +54,7 @@ const PreviewScreen: FC<PreviewScreenProps> = ({setShowPreview, arrVarNames, ele
             result += obj.value.replace(/\{(\w+)\}/g, (match: string, key: string) => key in val ? val[key]: match);
         } else if (obj.type === "ifelse") {
             let ifValue = obj.children.find((child: any) => child.name === "If").value;
-            ifValue = ifValue.replace(/\{(\w+)\}/g, (match: any, key: any) => val[key]);
+            ifValue = ifValue.replace(/\{(\w+)\}/g, (match: string, key: string) => key in val ? val[key]: match);
             if (ifValue !== "" && val[ifValue] !== "") {
                 let thenIndex = obj.children.findIndex((child: any) => child.name === "Then");
                 let elseIndex = obj.children.findIndex((child: any) => child.name === "Else");
@@ -77,6 +77,7 @@ useEffect(() => {
 
   return (
   <div className={styles.PreviewScreen}>
+    <h1 className={styles.Header}>Message Preview</h1>
     <TextareaAutosize id='message_preview' className={styles.message_preview} readOnly/>
     {Variables(arrVarNames)}
     <button onClick={() => setShowPreview(false)}>Close</button>

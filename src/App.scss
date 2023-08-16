@@ -1,22 +1,36 @@
+@import 'variables';
+
 * {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: $font;
   font-size: 14px;
+}
+body {
+  background-color: #e6e6ea;
 }
 textarea {
   font-size: 12px;
-  border: 1px solid gray;
+  font-family: monospace;
+  border: 1px solid $primary-color;
+  background-color: $primary-transparent;
+  backdrop-filter: blur(3px);
   border-radius: 6px;
   padding: .75rem;
   overflow:hidden;
   resize: none;
   margin-bottom: 1.5rem;
+  text-shadow: 0 0 5px white;
   &:focus {
-    outline: 1px solid black;
+    outline: 1px solid $primary-color;
+    background-color: rgba($color: white, $alpha: 0.9);
+    backdrop-filter: blur(10px);
   }
 }
 button {
   border-radius: 6px;
+  font-weight: 400;
   border: none;
+  color: black;
+  background-color: $secondary-color;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, .4);
   &:active {
       box-shadow: 0px 0px 6px rgba(0, 0, 0, .6);

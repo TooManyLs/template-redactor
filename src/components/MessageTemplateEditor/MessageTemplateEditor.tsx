@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
 import styles from "./MessageTemplateEditor.module.scss";
 import VarSelector from "../VarSelector/VarSelector";
 import { v4 as uuidV4 } from "uuid";
@@ -7,9 +7,9 @@ import PreviewScreen from "../PreviewScreen/PreviewScreen";
 
 interface MessageTemplateEditorProps {
   arrVarNames: string[];
-  template?: string;
-  callbackSave: (t: any) => Promise<void>;
-  setShowEditor: any;
+  template?: object[];
+  callbackSave: (t: object[]) => Promise<void>;
+  setShowEditor: Dispatch<SetStateAction<boolean>>;
 }
 
 const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
@@ -19,12 +19,19 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
   setShowEditor,
 }) => {
   const [showPreview, setShowPreview] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const body = document.querySelector("body") as HTMLBodyElement;
   if (showPreview) {
     body.style.overflow = "hidden";
   } else {
     body.style.overflow = "auto";
   }
+
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  useEffect(() => {
+    window.scrollTo(0, scrollPosition);
+  });
 
   const cursorPositionRef = useRef(0);
   const lastTextareaRef = useRef(0);
@@ -79,8 +86,8 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
   };
 
   const [elements, setElements] = useState(
-    localStorage.template
-      ? JSON.parse(localStorage.template)
+    template
+      ? template
       : [
           {
             type: "tarea",
@@ -296,7 +303,7 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
           />
         </div>
       ) : null}
-      <h1>Message template editor</h1>
+      <h1 className={styles.Header}>Message Template Editor</h1>
       <VarSelector
         arrVarNames={arrVarNames}
         cursorPositionRef={cursorPositionRef}
@@ -313,6 +320,7 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
         <button
           type="button"
           onClick={() => {
+            setScrollPosition(window.scrollY);
             preserveChanges();
             setShowPreview(true);
           }}
@@ -322,8 +330,14 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
         <button
           type="button"
           onClick={() => {
+            setScrollPosition(window.scrollY);
             preserveChanges();
             callbackSave(elements);
+            setShowPopup(true);
+            setTimeout(() => {
+              setScrollPosition(window.scrollY);
+              setShowPopup(false);
+            }, 3000);
           }}
         >
           Save
@@ -344,6 +358,7 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
           Close
         </button>
       </div>
+      {showPopup && <div className={styles.popup}>Template successfully saved!</div>}
     </div>
   );
 };
