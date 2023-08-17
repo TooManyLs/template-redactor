@@ -24,6 +24,7 @@ h1 {
         height: fit-content;
         background-color: $secondary-color;
         padding: .5rem 1.5rem;
+        width: 120px;
         margin: 0 1vw;
     }
 }
@@ -38,7 +39,7 @@ h1 {
         font-size: 16px;
         background-color: $accent-color;
     }
-    padding: 1vh;
+    padding: .5rem;
     margin-bottom: 1.5rem;
 }
 .if_then_else {
@@ -121,12 +122,15 @@ h1 {
     position: absolute;
     z-index: -1;
     right: 30px;
+    top: 6px;
     width: 800px;
     padding: 0;
     text-align: end;
     font-size: 170px;
     font-family: $font;
     font-weight: 500;
+    line-height: 170px;
+    user-select: none;
 }
  @keyframes fadeIn {
     from {
@@ -138,3 +142,14 @@ h1 {
         opacity: 1;
     }
 }
+// form {
+//     animation: expansion 1s cubic-bezier(.11,1.2,.4,.81);
+// }
+// @keyframes expansion {
+//     from {
+//         width: 50%;
+//     }
+//     to {
+//         width: 100%;
+//     }
+// }

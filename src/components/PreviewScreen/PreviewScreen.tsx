@@ -43,7 +43,6 @@ const PreviewScreen: FC<PreviewScreenProps> = ({setShowPreview, arrVarNames, ele
       ...prevValues,
       [key]: event.target.value
     }))
-    console.log('')
   }
 
   function extractValues(arr: any, val: Values) {

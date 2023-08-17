@@ -20,14 +20,28 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
 }) => {
   const [showPreview, setShowPreview] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [elements, setElements] = useState(
+    template
+      ? template
+      : [
+          {
+            type: "tarea",
+            name: "",
+            id: "splitable",
+            className: styles.defaultTextarea,
+            rows: 1,
+            value: "",
+          },
+        ]
+  );
+
   const body = document.querySelector("body") as HTMLBodyElement;
   if (showPreview) {
     body.style.overflow = "hidden";
   } else {
     body.style.overflow = "auto";
   }
-
-  const [scrollPosition, setScrollPosition] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, scrollPosition);
@@ -85,20 +99,6 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
     });
   };
 
-  const [elements, setElements] = useState(
-    template
-      ? template
-      : [
-          {
-            type: "tarea",
-            name: "",
-            id: "splitable",
-            className: styles.defaultTextarea,
-            rows: 1,
-            value: "",
-          },
-        ]
-  );
 
   useEffect(() => {
     const textareas = document.querySelectorAll("textarea");
