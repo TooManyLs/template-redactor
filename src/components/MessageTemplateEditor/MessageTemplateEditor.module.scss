@@ -121,6 +121,7 @@ h1 {
 .Header {
     position: absolute;
     z-index: -1;
+    letter-spacing: -3.4px;
     right: 30px;
     top: 6px;
     width: 800px;
@@ -129,7 +130,7 @@ h1 {
     font-size: 170px;
     font-family: $font;
     font-weight: 500;
-    line-height: 170px;
+    line-height: 204px;
     user-select: none;
 }
  @keyframes fadeIn {

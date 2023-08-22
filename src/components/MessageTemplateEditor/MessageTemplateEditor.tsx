@@ -58,6 +58,7 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
   const handleCursorPositionChange = (newCursorPosition: number) => {
     cursorPositionRef.current = newCursorPosition;
   };
+  
   const showContent = (array: object[]) => {
     return array.map((el: any) => {
       if (el.name === "If") {
@@ -98,7 +99,6 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
       }
     });
   };
-
 
   useEffect(() => {
     const textareas = document.querySelectorAll("textarea");
