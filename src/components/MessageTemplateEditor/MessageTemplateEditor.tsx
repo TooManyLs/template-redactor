@@ -49,12 +49,14 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
 
   const cursorPositionRef = useRef(0);
   const lastTextareaRef = useRef(0);
+  // tracking last textarea in focus and cursor position on it
   const handlePositionChange = (event: KeyboardEvent | MouseEvent) => {
     const textarea = event.target as HTMLTextAreaElement;
     cursorPositionRef.current = textarea.selectionStart;
     const textareas = Array.from(document.querySelectorAll("textarea"));
     lastTextareaRef.current = textareas.indexOf(textarea);
   };
+  // changes position of cursor after adding variable
   const handleCursorPositionChange = (newCursorPosition: number) => {
     cursorPositionRef.current = newCursorPosition;
   };
@@ -128,6 +130,19 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
     }
     return counter;
   };
+    // saving changes in textareas
+  const preserveChanges = () => {
+    let newElems: object[] = [...elements];
+    const textareas = Array.from(document.querySelectorAll("textarea"));
+    const tValues: string[] = [];
+    textareas.forEach((t) => {
+      tValues.push(t.value);
+    });
+    tValues.pop();
+    let tCount = 0;
+    changeValues(newElems, tValues, tCount);
+    setElements(newElems);
+  };
   // func for ascending up DOM tree
   const getParent = (elem: any, levels: number) => {
     while (levels > 0) {
@@ -136,7 +151,9 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
     }
     return elem;
   };
-  // func to get position of textarea that is being modified
+  // func to get position of textarea that is being modified that returns array
+  // of indices to get to current object(textarea being modified)
+  // and its index in current array.
   const recursePos = (elem: any, arr: number[], position: number) => {
     let idx = Array.from(getParent(elem, 2).children).indexOf(
       elem.parentElement
@@ -243,7 +260,7 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
       setElements(newElems);
     }
   };
-  // delete ifthenelse
+  // delete ifthenelse and merge neighboring textareas
   const handleDelete = () => {
     const activeElement = document.activeElement as HTMLButtonElement;
     const tarea1 = getParent(activeElement, 2).previousElementSibling
@@ -274,19 +291,7 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
     });
     setElements(newElems);
   };
-  // saving changes in textareas
-  const preserveChanges = () => {
-    let newElems: object[] = [...elements];
-    const textareas = Array.from(document.querySelectorAll("textarea"));
-    const tValues: string[] = [];
-    textareas.forEach((t) => {
-      tValues.push(t.value);
-    });
-    tValues.pop();
-    let tCount = 0;
-    changeValues(newElems, tValues, tCount);
-    setElements(newElems);
-  };
+
 
   return (
     <div

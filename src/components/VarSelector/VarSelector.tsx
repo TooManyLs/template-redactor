@@ -15,14 +15,17 @@ const VarSelector: FC<VarSelectorProps> = ({
   lastTextareaRef,
   onCursorPositionChange,
 }) => {
+  //func to insert variable into textarea at current position
   const addVar = (event: any) => {
-    let lastArea = lastTextareaRef.current;
+    let lastArea = lastTextareaRef.current; 
     let currPos = cursorPositionRef.current;
     const insertVar = event.target.textContent;
     const textareas = Array.from(document.querySelectorAll('textarea'));
+    //dividing value on cursor position and inserting value between
     const BeforeCursor = textareas[lastArea].value.substring(0, currPos);
     const AfterCursor = textareas[lastArea].value.substring(currPos);
     textareas[lastArea].value = BeforeCursor + insertVar + AfterCursor;
+    //setting new cursor positon
     const newPos = currPos + insertVar.length;
     textareas[lastArea].focus();
     textareas[lastArea].setSelectionRange(newPos, newPos);
