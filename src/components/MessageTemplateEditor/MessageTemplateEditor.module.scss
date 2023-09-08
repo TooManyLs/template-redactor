@@ -4,6 +4,10 @@
     width: auto;
     padding: 1.5rem;
     animation: fadeIn .5s;
+    .defaultTextarea {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
 h1 {
     margin: auto;
@@ -11,10 +15,6 @@ h1 {
     font-size: 1rem;
     font-weight: bolder;
     padding-bottom: 1rem;
-}
-.defaultTextarea {
-    width: 100%;
-    box-sizing: border-box;
 }
 .templateSubmit {
     display: flex;
