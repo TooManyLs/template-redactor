@@ -350,14 +350,7 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
         <button
           type="button"
           onClick={() => {
-            if (
-              window.confirm(
-                "Are you sure you want to close editor?\nTemplate will be deleted!"
-              )
-            ) {
-              localStorage.removeItem("template");
               setShowEditor(false);
-            }
           }}
         >
           Close
