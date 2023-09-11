@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./App.scss";
+import "./App.css";
 import MessageTemplateEditor from "./components/MessageTemplateEditor/MessageTemplateEditor";
 import StartScreen from "./components/StartScreen/StartScreen";
 

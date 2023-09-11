@@ -1,5 +1,5 @@
 import React, { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
-import styles from './PreviewScreen.module.scss';
+import styles from './PreviewScreen.module.css';
 import TextareaAutosize from 'react-textarea-autosize';
 
 interface PreviewScreenProps {

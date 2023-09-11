@@ -1,5 +1,5 @@
 import React, { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
-import styles from "./MessageTemplateEditor.module.scss";
+import styles from "./MessageTemplateEditor.module.css";
 import VarSelector from "../VarSelector/VarSelector";
 import { v4 as uuidV4 } from "uuid";
 import TextareaAutosize from "react-textarea-autosize";

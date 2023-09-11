@@ -1,0 +1,11 @@
+.VarSelector {
+  width: 100%;
+  padding-bottom: 1.5rem;
+}
+.VarSelector button {
+  margin-right: 1.5rem;
+  width: fit-content;
+  height: fit-content;
+  padding: 0.25rem 0.75rem;
+  background-color: #e5d2d6;
+}

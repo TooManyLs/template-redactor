@@ -1,5 +1,5 @@
 import React, { FC, MutableRefObject } from 'react';
-import styles from './VarSelector.module.scss';
+import styles from './VarSelector.module.css';
 import { v4 as uuidV4 } from 'uuid';
 
 interface VarSelectorProps {
