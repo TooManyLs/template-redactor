@@ -11,7 +11,29 @@ interface PreviewScreenProps {
 interface Values {
   [key: string]: string;
 }
-
+ export const extractValues = (arr: any, val: Values) => {
+    let result = '';
+    for (let i = 0; i < arr.length; i++) {
+      let obj = arr[i];
+      if (obj.type === 'tarea') {
+        result += obj.value.replace(/\{(\w+)\}/g, (match: string, key: string) => //Replace any occurrences of {key} in the value property of the object
+          key in val ? val[key] : match                                           //with the corresponding value from the val object, if such key exists
+        );
+      } else if (obj.type === 'ifelse') {
+        let ifValue = obj.children.find((child: any) => child.name === 'If').value;
+        ifValue = ifValue.replace(/\{(\w+)\}/g, (match: string, key: string) =>
+          key in val ? val[key] : match
+        );
+        let elseIndex = obj.children.findIndex((child: any) => child.name === 'Else');
+        if (ifValue !== '' && val[ifValue] !== '') {
+          result += extractValues(obj.children.slice(1, elseIndex), val); // Extract values until object with name 'Else'
+        } else {
+          result += extractValues(obj.children.slice(elseIndex), val); // Extract values starting from object with name 'Else'
+        }
+      }
+    }
+    return result;
+  };
 const PreviewScreen: FC<PreviewScreenProps> = ({ setShowPreview, arrVarNames, elements }) => {
   const [values, setValues] = useState<Values>({});
   const [message, setMessage] = useState('');
@@ -36,29 +58,7 @@ const PreviewScreen: FC<PreviewScreenProps> = ({ setShowPreview, arrVarNames, el
   };
   //func to replace variables with their values, solve if-then-else logic 
   //and return string with message.
-  const extractValues = (arr: any, val: Values) => {
-    let result = '';
-    for (let i = 0; i < arr.length; i++) {
-      let obj = arr[i];
-      if (obj.type === 'tarea') {
-        result += obj.value.replace(/\{(\w+)\}/g, (match: string, key: string) => //Replace any occurrences of {key} in the value property of the object
-          key in val ? val[key] : match                                           //with the corresponding value from the val object, if such key exists
-        );
-      } else if (obj.type === 'ifelse') {
-        let ifValue = obj.children.find((child: any) => child.name === 'If').value;
-        ifValue = ifValue.replace(/\{(\w+)\}/g, (match: string, key: string) =>
-          key in val ? val[key] : match
-        );
-        let elseIndex = obj.children.findIndex((child: any) => child.name === 'Else');
-        if (ifValue !== '' && val[ifValue] !== '') {
-          result += extractValues(obj.children.slice(1, elseIndex), val); // Extract values until object with name 'Else'
-        } else {
-          result += extractValues(obj.children.slice(elseIndex), val); // Extract values starting from object with name 'Else'
-        }
-      }
-    }
-    return result;
-  };
+
 
   const Variables = (array: string[]) => (
     <div className={styles.var_container}>
