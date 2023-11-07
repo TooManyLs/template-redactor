@@ -9,3 +9,37 @@
   padding: 0.25rem 0.75rem;
   background-color: #e5d2d6;
 }
+
+.addButton {
+  margin: 0;
+  width: 30px !important;
+  height: 30px !important;
+  padding: 0;
+  border-radius: 15px;
+}
+
+.removeMode:hover {
+  background-color: #ac1f1f;
+  color: white;
+}
+
+.newVarInput {
+  outline: none;
+  height: 20px;
+  width: 120px;
+  border-radius: 10px 0 0 10px;
+  border: 1px solid white;
+  padding: 0px 25px 0 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  &:focus {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.addVar {
+  display: inline;
+}
+
+.buttonDisplace {
+  margin-left: -15px;
+}

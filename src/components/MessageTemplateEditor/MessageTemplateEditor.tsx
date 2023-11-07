@@ -8,7 +8,7 @@ import PreviewScreen from "../PreviewScreen/PreviewScreen";
 interface MessageTemplateEditorProps {
   arrVarNames: string[];
   template?: object[];
-  callbackSave: (t: object[]) => Promise<void>;
+  callbackSave: (t: object[] | string[], name: string) => Promise<void>;
   setShowEditor: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -259,6 +259,7 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
       );
       setElements(newElems);
     }
+    setScrollPosition(window.scrollY);
   };
   // delete ifthenelse and merge neighboring textareas
   const handleDelete = () => {
@@ -290,6 +291,7 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
       value: mergedValue,
     });
     setElements(newElems);
+    setScrollPosition(window.scrollY);
   };
 
 
@@ -309,17 +311,20 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
         </div>
       ) : null}
       <h1 className={styles.Header}>Message Template Editor</h1>
-      <VarSelector
-        arrVarNames={arrVarNames}
-        cursorPositionRef={cursorPositionRef}
-        lastTextareaRef={lastTextareaRef}
-        onCursorPositionChange={handleCursorPositionChange}
-      />
-      <button className={styles.addIfelse} type="button" onClick={handleSplit}>
-        <strong>Click to add:</strong>
-        <span>IF</span>[{"{some_variable}"} or expression]
-        <span>THEN</span>[{"{then_value}"}]<span>ELSE</span>[{"{else_value}"}]
-      </button>
+      <div className={styles.actionMenu}>
+        <VarSelector
+          arrVarNames={arrVarNames}
+          cursorPositionRef={cursorPositionRef}
+          lastTextareaRef={lastTextareaRef}
+          onCursorPositionChange={handleCursorPositionChange}
+        />
+        <button className={styles.addIfelse} type="button" onClick={handleSplit}>
+          <strong>Click to add:</strong>
+          <span>IF</span>[{"{some_variable}"} or expression]
+          <span>THEN</span>[{"{then_value}"}]<span>ELSE</span>[{"{else_value}"}]
+        </button>
+      </div>
+      
       <form>{showContent(elements)}</form>
       <div className={styles.templateSubmit}>
         <button
@@ -337,7 +342,8 @@ const MessageTemplateEditor: FC<MessageTemplateEditorProps> = ({
           onClick={() => {
             setScrollPosition(window.scrollY);
             preserveChanges();
-            callbackSave(elements);
+            callbackSave(elements, 'template');
+            callbackSave(arrVarNames, 'arrVarNames')
             setShowPopup(true);
             setTimeout(() => {
               setScrollPosition(window.scrollY);

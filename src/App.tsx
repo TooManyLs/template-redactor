@@ -32,7 +32,7 @@ function App() {
   );
 }
 
-export const callbackSave = async (t: object[]) => {
-  localStorage.setItem("template", JSON.stringify(t));
+export const callbackSave = async (t: object[] | string[], name: string) => {
+  localStorage.setItem(name, JSON.stringify(t));
 };
 export default App;
